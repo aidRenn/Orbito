@@ -1,0 +1,264 @@
+@import url("https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300&display=swap");
+
+/* Core Tailwind */
+@import "tailwindcss";
+/* Custom CSS Imports */
+@import "./base.css";
+@import "./components.css";
+@import "./animations.css";
+
+/* Scan Blade / View files */
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../**/*.blade.php';
+@source '../**/*.js';
+
+/* ===========================
+   ROOT VARIABLES
+=========================== */
+:root {
+    --font-sora: "Sora", sans-serif;
+    --font-code: "Source Code Pro", monospace;
+    --font-grotesk: "Space Grotesk", sans-serif;
+    color-scheme: dark;
+}
+
+* {
+    scroll-behavior: smooth;
+}
+
+/* ===========================
+   THEME (Migrasi theme.extend)
+=========================== */
+@theme {
+    /* COLORS */
+    --color-color-1: #ac6aff;
+    --color-color-2: #ffc876;
+    --color-color-3: #ff776f;
+    --color-color-4: #7adb78;
+    --color-color-5: #858dff;
+    --color-color-6: #ff98e2;
+
+    --color-stroke-1: #26242c;
+
+    --color-n-1: #ffffff;
+    --color-n-2: #cac6dd;
+    --color-n-3: #ada8c3;
+    --color-n-4: #757185;
+    --color-n-5: #3f3a52;
+    --color-n-6: #252134;
+    --color-n-7: #15131d;
+    --color-n-8: #0e0c15;
+    --color-n-9: #474060;
+    --color-n-10: #43435c;
+    --color-n-11: #1b1b2e;
+    --color-n-12: #2e2a41;
+    --color-n-13: #6c7275;
+
+    /* FONTS */
+    --font-sans: var(--font-sora), var(--font-sans);
+    --font-code: var(--font-code);
+    --font-grotesk: var(--font-grotesk);
+
+    /* LETTER SPACING */
+    --tracking-tagline: 0.15em;
+
+    /* SPACING */
+    --spacing-0\.25: 0.0625rem;
+    --spacing-7\.5: 1.875rem;
+    --spacing-15: 3.75rem;
+
+    /* OPACITY */
+    --opacity-15: 0.15;
+
+    /* Z INDEX */
+    --z-1: 1;
+    --z-2: 2;
+    --z-3: 3;
+    --z-4: 4;
+    --z-5: 5;
+
+    /* BORDER WIDTH */
+    --border: 0.0625rem;
+}
+
+/* ===========================
+   CONIC GRADIENT (VALID V4 AOT)
+=========================== */
+@utility bg-conic-gradient {
+    background-image: conic-gradient(
+        from 225deg,
+        #ffc876,
+        #79fff7,
+        #9f53ff,
+        #ff98e2,
+        #ffc876
+    );
+}
+
+/* ===========================
+   BUTTON — GRADIENT FRAME
+=========================== */
+@utility button-gradient {
+    @apply relative inline-flex items-center justify-center
+         rounded-xl border border-n-6;
+}
+
+@utility button-gradient-wrap {
+    @apply absolute inset-0 rounded-xl cut-corner bg-conic-gradient opacity-90;
+}
+
+/* ===========================
+   BUTTON — INNER SURFACE
+=========================== */
+@utility button-inner {
+    @apply relative z-10 px-5 py-2 rounded-[0.75rem]
+         bg-n-8 text-n-1 font-code font-bold uppercase tracking-wider;
+}
+
+/* ===========================
+   CUT CORNER SHAPE
+=========================== */
+@utility cut-corner {
+    clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 0 100%);
+}
+
+/* HOVER STATES */
+@utility button-inner-hover {
+    @apply bg-n-7;
+}
+
+@utility button-gradient-glow {
+    filter: drop-shadow(0 0 12px rgba(255, 200, 118, 0.35));
+}
+
+/* ===========================
+   TYPOGRAPHY UTILITIES
+=========================== */
+@utility container {
+    @apply max-w-[77.5rem] mx-auto px-5 md:px-10 lg:px-15 xl:max-w-[87.5rem];
+}
+
+@utility h1 {
+    @apply font-semibold text-[2.5rem] leading-[3.25rem]
+         md:text-[2.75rem] md:leading-[3.75rem]
+         lg:text-[3.25rem] lg:leading-[4.0625rem]
+         xl:text-[3.75rem] xl:leading-[4.5rem];
+}
+
+@utility h2 {
+    @apply text-[1.75rem] leading-[2.5rem]
+         md:text-[2rem] md:leading-[2.5rem]
+         lg:text-[2.5rem] lg:leading-[3.5rem]
+         xl:text-[3rem] xl:leading-tight;
+}
+
+@utility h3 {
+    @apply text-[2rem] leading-normal md:text-[2.5rem];
+}
+@utility h4 {
+    @apply text-[2rem] leading-normal;
+}
+@utility h5 {
+    @apply text-2xl leading-normal;
+}
+@utility h6 {
+    @apply font-semibold text-lg leading-8;
+}
+
+@utility body-1 {
+    @apply text-[0.875rem] leading-[1.5rem]
+         md:text-[1rem] md:leading-[1.75rem]
+         lg:text-[1.25rem] lg:leading-8;
+}
+
+@utility body-2 {
+    @apply font-light text-[0.875rem] leading-6 md:text-base;
+}
+
+@utility caption {
+    @apply text-sm;
+}
+
+@utility tagline {
+    @apply font-grotesk font-light text-xs tracking-tagline uppercase;
+}
+
+@utility quote {
+    @apply font-code text-lg leading-normal;
+}
+
+@utility button {
+    @apply font-code text-xs font-bold uppercase tracking-wider;
+}
+
+/* ===========================
+   TAP HIGHLIGHT
+=========================== */
+@utility tap-highlight-color {
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+/* ===========================
+   BASE BODY STYLE
+=========================== */
+@layer base {
+    body {
+        @apply font-sans text-base bg-n-8 text-n-1;
+    }
+}
+
+/* ===========================
+   ROTATION UTILITIES
+=========================== */
+.rotate-45 {
+    @apply rotate-[45deg];
+}
+.rotate-90 {
+    @apply rotate-[90deg];
+}
+.rotate-135 {
+    @apply rotate-[135deg];
+}
+.rotate-180 {
+    @apply rotate-[180deg];
+}
+.rotate-225 {
+    @apply rotate-[225deg];
+}
+.rotate-270 {
+    @apply rotate-[270deg];
+}
+.rotate-315 {
+    @apply rotate-[315deg];
+}
+.rotate-360 {
+    @apply rotate-[360deg];
+}
+
+.-rotate-45 {
+    @apply rotate-[-45deg];
+}
+.-rotate-90 {
+    @apply rotate-[-90deg];
+}
+.-rotate-135 {
+    @apply rotate-[-135deg];
+}
+.-rotate-180 {
+    @apply rotate-[-180deg];
+}
+.-rotate-225 {
+    @apply rotate-[-225deg];
+}
+.-rotate-270 {
+    @apply rotate-[-270deg];
+}
+.-rotate-315 {
+    @apply rotate-[-315deg];
+}
+.-rotate-360 {
+    @apply rotate-[-360deg];
+}
