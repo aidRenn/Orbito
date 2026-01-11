@@ -10,14 +10,13 @@ return Application::configure(basePath: dirname(__DIR__))
         commands: __DIR__.'/../routes/console.php',
         health: '/up',
     )
-    // ->withMiddleware(function (Middleware $middleware): void {
-    //     //
-    // })
 
     ->withMiddleware(function (Middleware $middleware): void {
-    $middleware->redirectGuestsTo(fn () => route('auth.page'));
-})
+        // Middleware kamu saja
+        $middleware->redirectGuestsTo(fn () => route('auth.page'));
+    })
 
     ->withExceptions(function (Exceptions $exceptions): void {
         //
-    })->create();
+    })
+    ->create();
