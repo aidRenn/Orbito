@@ -18,7 +18,6 @@ class ProjectPhotoResource extends Resource
     {
         return $form->schema([
             Forms\Components\FileUpload::make('photo')
-                ->directory('projects/gallery')
                 ->image()
                 ->required(),
 

@@ -24,17 +24,25 @@
   <x-dashboard.topbar />
 
   {{-- <main class="pt-20 lg:pl-64 h-screen overflow-y-auto pb-10"> --}}
-    <main class="pt-20 lg:pl-64 h-screen overflow-y-auto overflow-x-hidden pb-10">
-    <div class="px-4 lg:px-10">
+    {{-- <main class="pt-20 lg:pl-64 h-screen overflow-y-auto overflow-x-hidden pb-10"> --}}
+<main class="pt-20 lg:pl-64 min-h-screen overflow-y-auto overflow-x-hidden pb-10 w-full max-w-full">
+  <div class="px-4 lg:px-10 min-w-0">
+
 
       {{-- THUMBNAIL --}}
-      <div class="rounded-2xl h-72 mb-10 overflow-hidden">
-        <img
-          src="{{ $project->thumbnail }}"
-          alt="{{ $project->title }}"
-          class="w-full h-full object-cover"
-        />
+      <div class="relative rounded-3xl mb-12 overflow-hidden bg-[#25243a]">
+        <div class="aspect-[16/7] w-full">
+          <img
+            src="{{ $project->thumbnail }}"
+            alt="{{ $project->title }}"
+            class="w-full h-full object-cover object-top"
+          />
+        </div>
+
+        {{-- Gradient overlay --}}
+        <div class="absolute inset-0 bg-gradient-to-t from-[#1c1b2d]/80 via-transparent to-transparent"></div>
       </div>
+
 
       {{-- TITLE + ACTION --}}
       <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6 mb-10">
@@ -50,13 +58,18 @@
           @endif
         </div>
 
-        <div class="flex gap-4">
+        <div class="flex flex-wrap gap-3">
           @if ($project->github_url)
             <a
               href="{{ $project->github_url }}"
               target="_blank"
-              class="px-6 py-3 bg-gray-700 rounded-lg font-semibold"
+              class="flex items-center gap-2 px-5 py-3 bg-[#25243a] hover:bg-[#2f2e4a] rounded-xl font-semibold transition"
             >
+              <img
+                src="{{ asset('images/github.png') }}"
+                class="w-5 h-5"
+                alt="GitHub"
+              />
               GitHub
             </a>
           @endif
@@ -65,36 +78,93 @@
             <a
               href="{{ $project->project_url }}"
               target="_blank"
-              class="px-6 py-3 bg-indigo-600 rounded-lg font-semibold"
+              class="flex items-center gap-2 px-5 py-3 bg-indigo-600 hover:bg-indigo-500 rounded-xl font-semibold transition"
             >
               Live Demo
             </a>
           @endif
         </div>
+
       </div>
+
+      {{-- OWNER --}}
+<div class="mb-12">
+  <div class="flex items-center gap-4 p-5 rounded-2xl bg-[#25243a] border border-white/5 max-w-xl">
+    
+    <div class="w-12 h-12 rounded-full overflow-hidden bg-[#1c1b2d] flex items-center justify-center">
+      @if ($project->user->avatar ?? false)
+        <img
+          src="{{ $project->user->avatar }}"
+          alt="{{ $project->user->name }}"
+          class="w-full h-full object-cover"
+        />
+      @else
+        <x-icones.person class="w-6 h-6 text-gray-400" />
+      @endif
+    </div>
+
+    <div class="flex-1 min-w-0">
+      <p class="text-xs uppercase tracking-wider text-gray-400 mb-1">
+        Created by
+      </p>
+
+      <p class="font-semibold leading-tight truncate">
+        {{ $project->user->name }}
+      </p>
+
+      @if (!empty($project->user->bio))
+        <p class="text-sm text-gray-400 leading-snug line-clamp-2">
+          {{ $project->user->bio }}
+        </p>
+      @endif
+    </div>
+
+  </div>
+</div>
+
 
       {{-- META --}}
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
         <div class="bg-[#25243a] rounded-2xl p-6">
-          <p class="text-xs text-gray-400 mb-2">CATEGORY</p>
-          <p class="font-semibold">
-            {{ $project->category?->name }}
-          </p>
+          <p class="text-xs uppercase tracking-wider text-gray-400 mb-3">Category</p>
+
+          <div class="flex flex-wrap gap-2">
+            @foreach ($project->categories as $cat)
+              <span class="px-3 py-1.5 text-xs rounded-full
+                          bg-indigo-500/10 text-indigo-300
+                          border border-indigo-500/20">
+                {{ $cat->name }}
+              </span>
+            @endforeach
+          </div>
         </div>
 
-        <div class="bg-[#25243a] rounded-2xl p-6 md:col-span-2">
-          <p class="text-xs text-gray-400 mb-4">TECH STACK</p>
 
-          <div class="flex gap-4 flex-wrap">
+        <div class="bg-[#25243a] rounded-2xl p-6 md:col-span-2">
+          <p class="text-xs uppercase tracking-wider text-gray-400 mb-4">Tech Stack</p>
+
+          <div class="flex flex-wrap gap-3">
             @foreach ($project->stacks as $stack)
               <div
-                class="w-16 h-16 bg-[#1c1b2d] rounded-xl flex items-center justify-center text-xs"
+                class="flex items-center gap-2 px-3 py-2
+                      bg-[#1c1b2d] rounded-xl
+                      border border-white/5
+                      text-xs text-gray-200"
               >
-                {{ $stack->name }}
+                @if ($stack->icon)
+                  <img
+                    src="{{ $stack->icon }}"
+                    class="w-4 h-4 object-contain opacity-80"
+                    alt="{{ $stack->name }}"
+                  />
+                @endif
+
+                <span>{{ $stack->name }}</span>
               </div>
             @endforeach
           </div>
         </div>
+
       </div>
 
       {{-- OVERVIEW & FEATURES --}}
@@ -135,13 +205,18 @@
             Similar Projects
           </h2>
 
-          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            @foreach ($similarProjects as $similar)
-              <x-project.similar-card :project="$similar" />
-            @endforeach
+<div class="grid w-full min-w-0 max-w-full overflow-hidden
+            gap-3 sm:gap-4 lg:gap-5
+            [grid-template-columns:repeat(auto-fit,minmax(220px,1fr))]">
+
+
+              @foreach ($similarProjects as $similar)
+                  <x-project.similar-card :project="$similar" />
+              @endforeach
           </div>
         </section>
       @endif
+
 
     </div>
   </main>

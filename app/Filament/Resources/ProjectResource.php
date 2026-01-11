@@ -10,8 +10,7 @@ use Illuminate\Support\Str;
 use App\Filament\Resources\ProjectResource\Pages;
 use App\Filament\Resources\ProjectResource\RelationManagers;
 use Filament\Tables\Filters\SelectFilter;
-
-
+use Illuminate\Support\Facades\Auth;
 
 class ProjectResource extends Resource
 {
@@ -25,73 +24,70 @@ class ProjectResource extends Resource
         return $form->schema([
 
             Forms\Components\Section::make('Basic Information')
-            ->schema([
+                ->schema([
 
-                Forms\Components\TextInput::make('title')
-                    ->required()
-                    ->live(onBlur: true)
-                    ->afterStateUpdated(fn ($state, callable $set) =>
-                    $set('slug', Str::slug($state))
-                ),
+                    Forms\Components\TextInput::make('title')
+                        ->required()
+                        ->live(onBlur: true)
+                        ->afterStateUpdated(fn ($state, callable $set) =>
+                            $set('slug', Str::slug($state))
+                        ),
 
-                Forms\Components\TextInput::make('slug')
-                    ->disabled()
-                    ->dehydrated()
-                    ->required(),
+                    Forms\Components\TextInput::make('slug')
+                        ->disabled()
+                        ->dehydrated()
+                        ->required(),
 
-                Forms\Components\Toggle::make('is_featured')
-                    ->label('Featured Project')
-                    ->helperText('Project ini akan tampil di highlight dashboard')
-                    ->default(false),
+                    Forms\Components\Toggle::make('is_featured')
+                        ->label('Featured Project')
+                        ->default(false),
 
-                Forms\Components\FileUpload::make('thumbnail')
-                    ->label('Thumbnail')
-                    ->image()
-                    ->required()
-                    ->disk('public')
-                    ->directory('temp/projects/thumbnails')
-                    ->preserveFilenames()
-                    ->acceptedFileTypes([
-                        'image/png',
-                        'image/jpg',
-                        'image/jpeg',
-                        'image/webp',
-                    ]),
+                    Forms\Components\FileUpload::make('thumbnail')
+                        ->label('Thumbnail')
+                        ->image()
+                        ->disk('public')
+                        ->directory('temp/projects/thumbnails')
+                        ->preserveFilenames()
+                        ->required(fn ($record) => $record === null) // hanya required saat create
+                        ->dehydrated(fn ($state) => filled($state)), // jangan kirim null saat edit
 
 
+                    // MULTI CATEGORY
+                    Forms\Components\Select::make('categories')
+                        ->label('Categories')
+                        ->multiple()
+                        ->relationship('categories', 'name')
+                        ->preload()
+                        ->required(),
 
-                Forms\Components\Select::make('category_id')
-                    ->relationship('category', 'name')
-                    // ->searchable()
-                    ->preload()
-                    ->required(),
+                    Forms\Components\Select::make('stacks')
+                        ->multiple()
+                        ->relationship('stacks', 'name')
+                        ->preload(),
 
-                Forms\Components\Select::make('stacks')
-                    ->relationship('stacks', 'name')
-                    ->multiple()
-                    ->preload(),
-            ])->columns(2),
+                ])->columns(2),
 
             Forms\Components\Section::make('Details')
-            ->schema([
-                Forms\Components\Textarea::make('overview')
-                    ->rows(4),
+                ->schema([
 
-                Forms\Components\Repeater::make('features')
-                    ->schema([
-                        Forms\Components\TextInput::make('text'),
-                    ])
-                    ->collapsed()
-                    ->grid(2),
+                    Forms\Components\Textarea::make('overview')
+                        ->rows(4),
 
-                Forms\Components\TextInput::make('project_url')
-                    ->label('Live URL')
-                    ->url(),
+                    Forms\Components\Repeater::make('features')
+                        ->schema([
+                            Forms\Components\TextInput::make('text')->required(),
+                        ])
+                        ->collapsed()
+                        ->grid(2),
 
-                Forms\Components\TextInput::make('github_url')
-                    ->url(),
+                    Forms\Components\TextInput::make('project_url')
+                        ->label('Live URL')
+                        ->url(),
 
-            ])->columns(2),
+                    Forms\Components\TextInput::make('github_url')
+                        ->url(),
+
+                ])->columns(2),
 
         ]);
     }
@@ -105,32 +101,33 @@ class ProjectResource extends Resource
                 ->searchable()
                 ->limit(30),
 
-            Tables\Columns\TextColumn::make('category.name'),
+            Tables\Columns\TextColumn::make('categories.name')
+                ->label('Categories')
+                ->listWithLineBreaks(),
 
             Tables\Columns\BadgeColumn::make('stacks.name')
-                ->colors(['primary'])
-                ->label('Tech'),
+                ->label('Tech')
+                ->listWithLineBreaks(),
 
             Tables\Columns\TextColumn::make('created_at')->date(),
         ])
-
         ->filters([
-            SelectFilter::make('category')
-                ->relationship('category', 'name')
-                ->label('Category'),
+            SelectFilter::make('categories')
+                ->relationship('categories', 'name')
+                ->multiple()
+                ->label('Categories'),
 
             SelectFilter::make('stacks')
                 ->relationship('stacks', 'name')
                 ->multiple()
                 ->label('Tech Stack'),
         ])
-
         ->actions([
             Tables\Actions\EditAction::make(),
         ]);
     }
 
-        public static function getPages(): array
+    public static function getPages(): array
     {
         return [
             'index'  => Pages\ListProjects::route('/'),
@@ -139,12 +136,26 @@ class ProjectResource extends Resource
         ];
     }
 
-        public static function getRelations(): array
+    public static function getRelations(): array
     {
         return [
             RelationManagers\PhotosRelationManager::class,
         ];
     }
 
+        public static function mutateFormDataBeforeCreate(array $data): array
+    {
+        $data['user_id'] = Auth::id();
 
+        return $data;
+    }
+
+    public static function mutateFormDataBeforeSave(array $data): array
+    {
+        if (! isset($data['user_id'])) {
+            $data['user_id'] = Auth::id();
+        }
+
+        return $data;
+    }
 }

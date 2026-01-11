@@ -38,7 +38,7 @@
             @endforeach
 
             <a
-              href="{{ route('projects.index', ['search' => request('search')]) }}"
+              href="{{ route('dashboard', ['search' => request('search')]) }}"
               class="ml-2 text-xs text-red-400 hover:text-red-300 underline"
             >
               Clear all
@@ -47,11 +47,22 @@
         @endif
   {{-- =========================== --}}
 
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        @foreach ($projects as $project)
-          <x-dashboard.project-card :project="$project" />
-        @endforeach
-      </div>
+{{-- <div class="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4 lg:gap-5">
+  @foreach ($projects as $project)
+    <x-dashboard.project-card :project="$project" />
+  @endforeach
+</div> --}}
+
+
+<div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4
+            gap-3 sm:gap-4 lg:gap-5">
+    @foreach ($projects as $project)
+        <x-dashboard.project-card :project="$project" />
+    @endforeach
+</div>
+
+
+
     
     </div>
   </main>

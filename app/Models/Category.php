@@ -12,8 +12,9 @@ class Category extends Model
         'icon',
     ];
 
-    public function projects()
-    {
-        return $this->hasMany(Project::class);
-    }
+public function projects()
+{
+    return $this->belongsToMany(Project::class, 'project_category');
+}
+
 }

@@ -8,14 +8,19 @@ use Illuminate\Support\Facades\Storage;
 use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
 use Illuminate\Http\UploadedFile;
 use App\Services\CloudinaryService;
+use App\Models\User;
+use App\Models\Category;
+use App\Models\Stack;
+
 
 class Project extends Model
 {
     protected $fillable = [
+        'user_id',
         'title',
         'slug',
         'thumbnail',
-        'category_id',
+        // 'category_id',
         'overview',
         'features',
         'status',
@@ -37,59 +42,59 @@ class Project extends Model
     /* =======================
        CLOUDINARY THUMBNAIL
     ======================== */
-    public function setThumbnailAttribute($value): void
-    {
-        // allow clearing thumbnail
-        if (! $value) {
-            $this->attributes['thumbnail'] = null;
-            return;
-        }
+public function setThumbnailAttribute($value): void
+{
+    // Jika null (edit tanpa ganti), jangan sentuh thumbnail lama
+    if ($value === null) {
+        return;
+    }
 
-        // CASE 1 — Livewire / Filament upload object
-        if ($value instanceof TemporaryUploadedFile || $value instanceof UploadedFile) {
+    // Jika benar-benar ingin dikosongkan (jarang dipakai)
+    if ($value === false) {
+        $this->attributes['thumbnail'] = null;
+        return;
+    }
 
-            // optional: delete old thumbnail
-            if (! empty($this->attributes['thumbnail'])) {
-                // tidak delete lama kalau kamu memang ingin disimpan
-                // kalau mau auto delete → bilang ya nanti kita aktifkan
-            }
+    // CASE 1 — Livewire / Filament upload object
+    if ($value instanceof TemporaryUploadedFile || $value instanceof UploadedFile) {
 
-            $result = CloudinaryService::uploadImage($value, 'showcase/projects/thumbnails');
+        $result = CloudinaryService::uploadImage($value, 'showcase/projects/thumbnails');
+
+        $this->attributes['thumbnail'] = $result['url'] ?? null;
+
+        try { $value->delete(); } catch (\Throwable $e) {}
+
+        return;
+    }
+
+    // CASE 2 — Filament sends temp path string
+    if (is_string($value) && str_starts_with($value, 'temp/')) {
+
+        $path = Storage::disk('public')->path($value);
+
+        if (file_exists($path)) {
+
+            $file = new UploadedFile(
+                $path,
+                basename($path),
+                mime_content_type($path),
+                test: true
+            );
+
+            $result = CloudinaryService::uploadImage($file, 'showcase/projects/thumbnails');
+
+            Storage::disk('public')->delete($value);
 
             $this->attributes['thumbnail'] = $result['url'] ?? null;
 
-            try { $value->delete(); } catch (\Throwable $e) {}
-
             return;
         }
-
-        // CASE 2 — Filament sends temp path string
-        if (is_string($value) && str_starts_with($value, 'temp/')) {
-
-            $path = Storage::disk('public')->path($value);
-
-            if (file_exists($path)) {
-
-                $file = new UploadedFile(
-                    $path,
-                    basename($path),
-                    mime_content_type($path),
-                    test: true
-                );
-
-                $result = CloudinaryService::uploadImage($file, 'showcase/projects/thumbnails');
-
-                Storage::disk('public')->delete($value);
-
-                $this->attributes['thumbnail'] = $result['url'] ?? null;
-
-                return;
-            }
-        }
-
-        // fallback — assume already URL
-        $this->attributes['thumbnail'] = $value;
     }
+
+    // fallback — assume already URL
+    $this->attributes['thumbnail'] = $value;
+}
+
 
 
     /* =======================
@@ -112,14 +117,19 @@ class Project extends Model
             // saat ini: tidak dihapus (sesuai keputusan "tanpa public_id")
 
             // delete gallery photos → akan pakai mutator masing2
-            $project->photos()->each->delete();
+              $project->photos->each->delete();
         });
     }
 
     // Category relation
-    public function category()
+    // public function category()
+    // {
+    //     return $this->belongsTo(Category::class);
+    // }
+    // Categories (many-to-many)
+    public function categories()
     {
-        return $this->belongsTo(Category::class);
+        return $this->belongsToMany(Category::class, 'project_category');
     }
 
     // Tech stacks (pivot)
@@ -134,4 +144,9 @@ public function photos()
     return $this->hasMany(\App\Models\ProjectPhoto::class)->orderBy('order');
 }
 
+
+public function user()
+{
+    return $this->belongsTo(User::class);
+}
 }

@@ -16,31 +16,30 @@ class StackResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-cpu-chip';
     protected static ?string $navigationGroup = 'Project Data';
 
-public static function form(Forms\Form $form): Forms\Form
-{
-    return $form->schema([
-        Forms\Components\TextInput::make('name')
-            ->required()
-            ->live(onBlur: true)
-            ->afterStateUpdated(fn ($state, callable $set) =>
-                $set('slug', Str::slug($state))
-            ),
+    public static function form(Forms\Form $form): Forms\Form
+    {
+        return $form->schema([
+            Forms\Components\TextInput::make('name')
+                ->required()
+                ->live(onBlur: true)
+                ->afterStateUpdated(fn ($state, callable $set) =>
+                    $set('slug', Str::slug($state))
+                ),
 
-        Forms\Components\TextInput::make('slug')
-            ->disabled()
-            ->dehydrated()
-            ->unique(ignoreRecord: true)
-            ->required(),
+            Forms\Components\TextInput::make('slug')
+                ->disabled()
+                ->dehydrated()
+                ->unique(ignoreRecord: true)
+                ->required(),
 
-Forms\Components\FileUpload::make('icon')
-    ->label('Icon')
-    ->image()
-    ->disk('public')
-    ->directory('temp/stacks')
-    ->nullable(),
-    ]);
-}
-
+            Forms\Components\FileUpload::make('icon')
+                ->label('Icon')
+                ->image()
+                ->disk('public')
+                ->directory('temp/stacks')
+                ->nullable(),
+        ]);
+    }
 
     public static function table(Tables\Table $table): Tables\Table
     {
