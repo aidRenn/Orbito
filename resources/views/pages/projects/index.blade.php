@@ -12,7 +12,7 @@
 
       <x-dashboard.featured :items="$featuredProjects" />
 
-      
+
     <h2 class="text-2xl font-bold mb-6">Projects</h2>
 
   {{-- =========================== --}}
@@ -62,8 +62,13 @@
 </div>
 
 
+{{-- Pagination --}}
+<div class="mt-12 flex justify-center">
+    {{ $projects->onEachSide(1)->links() }}
+</div>
 
-    
+
+
     </div>
   </main>
 @endsection
