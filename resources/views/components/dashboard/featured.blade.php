@@ -1,11 +1,12 @@
 @props(['items'])
 
 @if ($items->count() >= 1)
-  <div
-    x-data="featuredCarousel({{ $items->toJson() }})"
-    x-init="start()"
-    class="mb-14"
-  >
+<div
+  x-data="featuredCarousel(@js($items))"
+  x-init="start()"
+  class="mb-14"
+>
+
 
   <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-6">
 
@@ -78,6 +79,10 @@
 </div>
 
 </div>
+
+
+
+
 
   {{-- FEATURED SECOND --}}
 <div
