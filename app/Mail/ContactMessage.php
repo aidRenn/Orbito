@@ -21,6 +21,7 @@ class ContactMessage extends Mailable
     {
         return $this
             ->subject('New Contact Message')
+            ->replyTo($this->data['email'], $this->data['name'])
             ->view('emails.contact');
     }
 }
