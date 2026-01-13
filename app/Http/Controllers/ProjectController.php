@@ -28,7 +28,7 @@ class ProjectController extends Controller
                 )
             )
             ->latest()
-            ->paginate(12)
+            ->paginate(24)
             ->withQueryString();
 
         $featuredProjects = Project::with(['stacks', 'categories', 'user'])
@@ -54,26 +54,31 @@ class ProjectController extends Controller
             'photos' => fn ($q) => $q->orderBy('order'),
         ])->where('slug', $slug)->firstOrFail();
 
-        $stackIds     = $project->stacks->pluck('id');
-        $categoryIds  = $project->categories->pluck('id');
+$stackIds    = $project->stacks->pluck('id');
+$categoryIds = $project->categories->pluck('id');
 
-        $similarProjects = Project::with(['stacks', 'categories'])
-            ->where('id', '!=', $project->id)
-            ->where(function ($q) use ($stackIds, $categoryIds) {
-                if ($stackIds->isNotEmpty()) {
-                    $q->whereHas('stacks', fn ($s) =>
-                        $s->whereIn('stacks.id', $stackIds)
-                    );
-                }
+$similarProjects = Project::with(['stacks', 'categories', 'user'])
+    ->where('id', '!=', $project->id)
+    ->where('status', 'published') // atau status yang kamu anggap "aktif"
+    ->where(function ($q) use ($stackIds, $categoryIds) {
 
-                if ($categoryIds->isNotEmpty()) {
-                    $q->orWhereHas('categories', fn ($c) =>
-                        $c->whereIn('categories.id', $categoryIds)
-                    );
-                }
-            })
-            ->limit(4)
-            ->get();
+        // Prioritaskan yang punya relasi
+        if ($stackIds->isNotEmpty()) {
+            $q->whereHas('stacks', fn ($s) =>
+                $s->whereIn('stacks.id', $stackIds)
+            );
+        }
+
+        if ($categoryIds->isNotEmpty()) {
+            $q->orWhereHas('categories', fn ($c) =>
+                $c->whereIn('categories.id', $categoryIds)
+            );
+        }
+    })
+    ->latest()
+    ->paginate(12)
+    ->withQueryString();
+
 
         $seo = [
             'title'       => $project->title . ' – Project Showcase',
@@ -91,9 +96,3 @@ class ProjectController extends Controller
         ]);
     }
 }
-
-
-
-
-
-

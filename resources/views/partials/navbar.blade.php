@@ -2,7 +2,7 @@
   <div class="inner">
     {{-- Logo --}}
     <a href="#hero" class="logo">
-      Adrian JSM
+      Buildra
     </a>
 
     {{-- Desktop Navigation --}}
@@ -22,7 +22,7 @@
     {{-- Contact Button --}}
     <a href="#contact" class="contact-btn group">
       <div class="inner">
-        <span>Contact me</span>
+        <span>Contact us</span>
       </div>
     </a>
   </div>

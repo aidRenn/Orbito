@@ -14,9 +14,9 @@ body {
     font-family: "Mona Sans", sans-serif;
 }
 
-section {
+/* section {
     width: 100dvw;
-}
+} */
 
 /* OPTIONAL – bikin feel lebih “zoomed” kayak React */
 @media (min-width: 1280px) {

@@ -3,14 +3,14 @@
 return [
   [
     'text' => 'Ideas',
-    'img'  => 'assets/images/idea.png',
+    'img'  => 'assets/images/ideas.svg',
   ],
   [
     'text' => 'Design',
-    'img'  => 'assets/images/design.png',
+    'img'  => 'assets/images/designs.svg',
   ],
   [
     'text' => 'Code',
-    'img'  => 'assets/images/code.png',
+    'img'  => 'assets/images/code.svg',
   ],
 ];

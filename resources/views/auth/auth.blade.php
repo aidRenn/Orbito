@@ -2,12 +2,12 @@
     <!-- Background blur layer -->
     <div
         class="fixed inset-0 bg-cover bg-center blur-lg scale-110"
-        style="background-image: url('{{ asset('images/auth-bg.jpg') }}')"
+        style="background-image: url('{{ asset('images/planet4.jpg') }}')"
     ></div>
 
-    <!-- Header / Navbar -->
+    <!-- Header -->
     <header class="fixed top-0 left-0 w-full py-6 z-20 flex justify-center">
-        <nav class="flex gap-8 text-sm md:text-base">
+        <nav class="flex gap-6 text-sm md:text-base">
             <a href="{{ route('home') }}" class="relative after:absolute after:left-0 after:-bottom-1 after:w-full after:h-[2px] after:bg-white after:opacity-0 hover:after:opacity-100 after:transition">Home</a>
             <a href="#" class="hover:opacity-80">About</a>
             <a href="#" class="hover:opacity-80">Services</a>
@@ -18,99 +18,112 @@
     <!-- Main -->
     <main class="relative z-10 min-h-screen flex items-center justify-center px-4 pt-24">
         <div
-            class="relative w-full max-w-7xl min-h-[720px] bg-cover bg-center rounded-2xl overflow-hidden flex flex-col lg:flex-row"
-            style="background-image: url('{{ asset('images/auth-bg.jpg') }}')"
+            class="relative w-full max-w-7xl bg-cover bg-center rounded-2xl overflow-hidden
+                   flex flex-col lg:flex-row"
+            style="background-image: url('{{ asset('images/planet4.jpg') }}')"
         >
-            <!-- Left Content -->
-            <section class="w-full lg:w-[55%] p-8 md:p-12 lg:p-16 flex flex-col justify-between">
-                <h2 class="text-2xl md:text-3xl font-semibold">Showcase</h2>
+            <!-- Left Hero (Desktop Only) -->
+            <section
+                class="hidden lg:flex w-full lg:w-[55%]
+                       p-8 md:p-12 lg:p-16
+                       flex-col justify-between"
+            >
+                <h2 class="text-2xl md:text-3xl font-semibold">Orbito</h2>
 
-                <div class="mt-6 lg:mt-0">
-                    <h2 class="text-3xl md:text-4xl lg:text-5xl leading-tight">
+                <div>
+                    <h2 class="text-4xl lg:text-5xl leading-tight">
                         Welcome<br>
-                        <span class="text-lg md:text-2xl">To your creative space.</span>
+                        <span class="text-2xl">To your creative space.</span>
                     </h2>
-                    <p class="mt-4 text-sm md:text-base max-w-md">
+                    <p class="mt-4 text-base max-w-md">
                         Build, manage, and present your work beautifully.
                     </p>
                 </div>
             </section>
 
-            <!-- Form Box -->
-            <section class="logreg-box relative w-full lg:w-[45%] flex items-center justify-center overflow-hidden py-12">
+            <!-- Right / Form Area -->
+            <section class="w-full lg:w-[45%] flex flex-col items-center justify-center py-12">
 
-                <!-- Login -->
-                <div class="from-box login absolute w-[85%] h-[85%] backdrop-blur-xl rounded-[48px] flex items-center justify-center">
-                    <form method="POST" action="{{ route('login') }}" class="w-full px-8 md:px-12">
-                        @csrf
-                        <h2 class="text-2xl md:text-3xl text-center mb-8">Sign In</h2>
-
-                        <div class="input-box relative border-b border-white mb-8">
-                            <input name="email" value="{{ old('email') }}" required class="w-full bg-transparent outline-none py-2" />
-                            <label class="absolute left-0 top-1/2 -translate-y-1/2 transition">Email</label>
-                            @error('email')
-                                <p class="text-sm text-red-400 mt-2">{{ $message }}</p>
-                            @enderror
-                        </div>
-
-                        <div class="input-box relative border-b border-white mb-6">
-                            <input type="password" name="password" required class="w-full bg-transparent outline-none py-2" />
-                            <label class="absolute left-0 top-1/2 -translate-y-1/2 transition">Password</label>
-                            @error('password')
-                                <p class="text-sm text-red-400 mt-2">{{ $message }}</p>
-                            @enderror
-                        </div>
-
-                        <button class="w-full h-12 bg-pink-700 rounded">Sign In</button>
-
-                        <p class="text-center text-sm mt-6">
-                            Don't have an account?
-                            <a href="#" class="register-link underline">Sign up</a>
-                        </p>
-                    </form>
+                <!-- Mobile Branding -->
+                <div class="lg:hidden w-full px-6 mb-6 text-center">
+                    <h2 class="text-2xl font-semibold mb-1">Orbito</h2>
+                    <p class="text-sm text-white/80">
+                        Your creative space.
+                    </p>
                 </div>
 
-                <!-- Register -->
-                <div class="from-box register absolute w-[85%] h-[85%] backdrop-blur-xl rounded-[48px] flex items-center justify-center">
-                    <form method="POST" action="{{ route('register') }}" class="w-full px-8 md:px-12">
-                        @csrf
-                        <h2 class="text-2xl md:text-3xl text-center mb-8">Sign Up</h2>
+                <!-- Form Box -->
+                <div class="logreg-box relative w-full
+                                flex items-center justify-center overflow-hidden
+                                min-h-[420px] lg:min-h-[720px]">
 
-                        <div class="input-box relative border-b border-white mb-6">
-                            <input name="name" value="{{ old('name') }}" required class="w-full bg-transparent outline-none py-2" />
-                            <label class="absolute left-0 top-1/2 -translate-y-1/2 transition">Name</label>
-                            @error('name')
-                                <p class="text-sm text-red-400 mt-2">{{ $message }}</p>
-                            @enderror
-                        </div>
+                    <!-- Login -->
+                    <div class="from-box login relative lg:absolute
+                                w-[90%] md:w-[85%] h-auto lg:h-[85%]
+                                backdrop-blur-xl rounded-[32px] lg:rounded-[48px]
+                                flex items-center justify-center">
+                        <form method="POST" action="{{ route('login') }}" class="w-full px-8 md:px-12">
+                            @csrf
+                            <h2 class="text-2xl md:text-3xl text-center mb-8">Sign In</h2>
 
-                        <div class="input-box relative border-b border-white mb-6">
-                            <input name="email" value="{{ old('email') }}" required class="w-full bg-transparent outline-none py-2" />
-                            <label class="absolute left-0 top-1/2 -translate-y-1/2 transition">Email</label>
-                            @error('email')
-                                <p class="text-sm text-red-400 mt-2">{{ $message }}</p>
-                            @enderror
-                        </div>
+                            <div class="input-box relative border-b border-white mb-8">
+                                <input name="email" required class="w-full bg-transparent outline-none py-2" />
+                                <label class="absolute left-0 top-1/2 -translate-y-1/2 transition">Email</label>
+                            </div>
 
-                        <div class="input-box relative border-b border-white mb-6">
-                            <input type="password" name="password" required class="w-full bg-transparent outline-none py-2" />
-                            <label class="absolute left-0 top-1/2 -translate-y-1/2 transition">Password</label>
-                        </div>
+                            <div class="input-box relative border-b border-white mb-6">
+                                <input type="password" name="password" required class="w-full bg-transparent outline-none py-2" />
+                                <label class="absolute left-0 top-1/2 -translate-y-1/2 transition">Password</label>
+                            </div>
 
-                        <div class="input-box relative border-b border-white mb-6">
-                            <input type="password" name="password_confirmation" required class="w-full bg-transparent outline-none py-2" />
-                            <label class="absolute left-0 top-1/2 -translate-y-1/2 transition">Confirm</label>
-                        </div>
+                            <button class="w-full h-12 bg-pink-700 rounded">Sign In</button>
 
-                        <button class="w-full h-12 bg-pink-700 rounded">Sign Up</button>
+                            <p class="text-center text-sm mt-6">
+                                Don't have an account?
+                                <a href="#" class="register-link underline">Sign up</a>
+                            </p>
+                        </form>
+                    </div>
 
-                        <p class="text-center text-sm mt-6">
-                            Already have an account?
-                            <a href="#" class="login-link underline">Sign in</a>
-                        </p>
-                    </form>
+                    <!-- Register -->
+                    <div class="from-box register relative lg:absolute
+                                w-[90%] md:w-[85%] h-auto lg:h-[85%]
+                                backdrop-blur-xl rounded-[32px] lg:rounded-[48px]
+                                flex items-center justify-center">
+                        <form method="POST" action="{{ route('register') }}" class="w-full px-8 md:px-12">
+                            @csrf
+                            <h2 class="text-2xl md:text-3xl text-center mb-8">Sign Up</h2>
+
+                            <div class="input-box relative border-b border-white mb-6">
+                                <input name="name" required class="w-full bg-transparent outline-none py-2" />
+                                <label class="absolute left-0 top-1/2 -translate-y-1/2 transition">Name</label>
+                            </div>
+
+                            <div class="input-box relative border-b border-white mb-6">
+                                <input name="email" required class="w-full bg-transparent outline-none py-2" />
+                                <label class="absolute left-0 top-1/2 -translate-y-1/2 transition">Email</label>
+                            </div>
+
+                            <div class="input-box relative border-b border-white mb-6">
+                                <input type="password" name="password" required class="w-full bg-transparent outline-none py-2" />
+                                <label class="absolute left-0 top-1/2 -translate-y-1/2 transition">Password</label>
+                            </div>
+
+                            <div class="input-box relative border-b border-white mb-6">
+                                <input type="password" name="password_confirmation" required class="w-full bg-transparent outline-none py-2" />
+                                <label class="absolute left-0 top-1/2 -translate-y-1/2 transition">Confirm</label>
+                            </div>
+
+                            <button class="w-full h-12 bg-pink-700 rounded">Sign Up</button>
+
+                            <p class="text-center text-sm mt-6">
+                                Already have an account?
+                                <a href="#" class="login-link underline">Sign in</a>
+                            </p>
+                        </form>
+                    </div>
+
                 </div>
-
             </section>
         </div>
     </main>
@@ -138,25 +151,43 @@
             font-size: 12px;
         }
 
-        .logreg-box .from-box.login {
-            transform: translateX(0);
-            transition: transform .6s ease;
-            transition-delay: .6s;
+        /* Mobile: swap, not slide */
+        @media (max-width: 1023px) {
+            .logreg-box .from-box.register {
+                display: none;
+            }
+
+            .logreg-box.active .from-box.login {
+                display: none;
+            }
+
+            .logreg-box.active .from-box.register {
+                display: flex;
+            }
         }
 
-        .logreg-box.active .from-box.login {
-            transform: translateX(110%);
-            transition-delay: 0s;
-        }
+        /* Desktop: slide animation */
+        @media (min-width: 1024px) {
+            .logreg-box .from-box.login {
+                transform: translateX(0);
+                transition: transform .6s ease;
+                transition-delay: .6s;
+            }
 
-        .logreg-box .from-box.register {
-            transform: translateX(110%);
-            transition: transform .6s ease;
-        }
+            .logreg-box.active .from-box.login {
+                transform: translateX(110%);
+                transition-delay: 0s;
+            }
 
-        .logreg-box.active .from-box.register {
-            transform: translateX(0);
-            transition-delay: .6s;
+            .logreg-box .from-box.register {
+                transform: translateX(110%);
+                transition: transform .6s ease;
+            }
+
+            .logreg-box.active .from-box.register {
+                transform: translateX(0);
+                transition-delay: .6s;
+            }
         }
     </style>
 </x-guest-layout>

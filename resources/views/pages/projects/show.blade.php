@@ -90,7 +90,7 @@
       {{-- OWNER --}}
 <div class="mb-12">
   <div class="flex items-center gap-4 p-5 rounded-2xl bg-[#25243a] border border-white/5 max-w-xl">
-    
+
     <div class="w-12 h-12 rounded-full overflow-hidden bg-[#1c1b2d] flex items-center justify-center">
       @if ($project->user->avatar ?? false)
         <img
@@ -196,7 +196,10 @@
 
         <x-project.gallery :photos="$project->photos" />
 
-      </div> {{-- END GRID --}}
+      </div>
+      {{-- END GRID --}}
+
+
 
       {{-- SIMILAR PROJECTS --}}
       @if ($similarProjects->count())
@@ -207,15 +210,19 @@
 
 <div class="grid w-full min-w-0 max-w-full overflow-hidden
             gap-3 sm:gap-4 lg:gap-5
-            [grid-template-columns:repeat(auto-fit,minmax(220px,1fr))]">
-
+            [grid-template-columns:repeat(auto-fit,minmax(240px,1fr))]">
 
               @foreach ($similarProjects as $similar)
                   <x-project.similar-card :project="$similar" />
               @endforeach
           </div>
+
+          <div class="mt-10 flex justify-center">
+              {{ $similarProjects->onEachSide(1)->links() }}
+          </div>
         </section>
       @endif
+
 
 
     </div>

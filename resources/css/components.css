@@ -26,9 +26,9 @@
         @apply px-5 md:px-20;
     }
 
-    .section-padding {
+    /* .section-padding {
         @apply px-5 md:px-10 md:mt-40 mt-20;
-    }
+    } */
 
     .mt-responsive {
         @apply xl:mt-20 md:mt-0 mt-40;
@@ -189,7 +189,7 @@
         @apply px-4 py-4 rounded-lg bg-black-200 flex justify-center items-center relative cursor-pointer overflow-hidden;
 
         .bg-circle {
-            @apply absolute -right-10 origin-center top-1/2 -translate-y-1/2 
+            @apply absolute -right-10 origin-center top-1/2 -translate-y-1/2
         w-[120%] h-[120%] group-hover:size-10 group-hover:right-10
         rounded-full bg-white-50 transition-all duration-500;
         }
@@ -200,7 +200,7 @@
         }
 
         .arrow-wrapper {
-            @apply group-hover:bg-white-50 size-10 rounded-full absolute right-10 top-1/2 
+            @apply group-hover:bg-white-50 size-10 rounded-full absolute right-10 top-1/2
         -translate-y-1/2 flex justify-center items-center overflow-hidden;
 
             img {

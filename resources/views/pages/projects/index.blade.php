@@ -47,19 +47,15 @@
         @endif
   {{-- =========================== --}}
 
-{{-- <div class="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4 lg:gap-5">
-  @foreach ($projects as $project)
-    <x-dashboard.project-card :project="$project" />
-  @endforeach
-</div> --}}
 
 
-<div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4
-            gap-3 sm:gap-4 lg:gap-5">
+<div class="grid grid-cols-[repeat(auto-fit,minmax(17rem,1fr))] gap-3 sm:gap-4 lg:gap-5">
     @foreach ($projects as $project)
         <x-dashboard.project-card :project="$project" />
     @endforeach
 </div>
+
+
 
 
 {{-- Pagination --}}

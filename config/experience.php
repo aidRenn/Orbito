@@ -2,10 +2,10 @@
 
 return [
   [
-    'title' => 'Senior Frontend Developer',
-    'date'  => '2022 – Present',
-    'img'   => 'assets/images/experience-1.png',
-    'logo'  => 'assets/images/company-1.png',
+    'title' => 'Frontend Developer',
+    'date'  => '23010400xx',
+    'img'   => 'assets/images/experience-2.jpg',
+    'logo'  => 'Prakrowo',
     'responsibilities' => [
       'Developed scalable frontend architecture',
       'Collaborated with cross-functional teams',
@@ -13,10 +13,43 @@ return [
     ],
   ],
   [
+    'title' => 'Backend Developer',
+    'date'  => '23010400xx',
+    'img'   => 'assets/images/experience-2.jpg',
+    'logo'  => 'Jrokrowi',
+    'responsibilities' => [
+      'Built reusable UI components',
+      'Maintained design systems',
+      'Worked closely with designers',
+    ],
+  ],
+  [
+    'title' => 'Backend Developer',
+    'date'  => '23010400xx',
+    'img'   => 'assets/images/experience-2.jpg',
+    'logo'  => 'Apa Aja',
+    'responsibilities' => [
+      'Built reusable UI components',
+      'Maintained design systems',
+      'Worked closely with designers',
+    ],
+  ],
+  [
     'title' => 'Frontend Developer',
-    'date'  => '2020 – 2022',
-    'img'   => 'assets/images/experience-2.png',
-    'logo'  => 'assets/images/company-2.png',
+    'date'  => '23010400xx',
+    'img'   => 'assets/images/experience-2.jpg',
+    'logo'  => 'Test Cihuy',
+    'responsibilities' => [
+      'Built reusable UI components',
+      'Maintained design systems',
+      'Worked closely with designers',
+    ],
+  ],
+  [
+    'title' => 'Database Administrator',
+    'date'  => '23010400xx',
+    'img'   => 'assets/images/experience-2.jpg',
+    'logo'  => 'Lmao Pisan Test',
     'responsibilities' => [
       'Built reusable UI components',
       'Maintained design systems',

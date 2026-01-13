@@ -65,10 +65,19 @@
         </div>
       </div>
 
-      {{-- RIGHT: VISUAL PLACEHOLDER (3D REMOVED) --}}
+      {{-- RIGHT: IMAGE --}}
       <div class="xl:col-span-7 min-h-96">
-        <div class="bg-[#cd7c2e] w-full h-full rounded-3xl overflow-hidden">
-          {{-- intentionally empty --}}
+        <div class="bg-[#cd7c2e] w-full h-full rounded-3xl overflow-hidden relative">
+
+          <img
+            src="{{ asset('assets/images/earth.jpg') }}"
+            alt="Earth"
+            class="w-full h-full object-cover"
+          >
+
+          {{-- Optional overlay biar lebih elegan --}}
+          <div class="absolute inset-0 bg-black/20"></div>
+
         </div>
       </div>
     </div>

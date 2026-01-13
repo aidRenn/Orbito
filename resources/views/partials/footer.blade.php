@@ -20,7 +20,7 @@
     {{-- Right --}}
     <div class="flex flex-col justify-center">
       <p class="text-center md:text-end">
-        © {{ now()->year }} Adrian Hajdin. All rights reserved.
+        © {{ now()->year }} Buildra. All rights reserved.
       </p>
     </div>
   </div>
