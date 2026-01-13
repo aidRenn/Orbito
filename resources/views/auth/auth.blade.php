@@ -64,14 +64,26 @@
                                 flex items-center justify-center">
                         <form method="POST" action="{{ route('login') }}" class="w-full px-8 md:px-12">
                             @csrf
-                            <h2 class="text-2xl md:text-3xl text-center mb-8">Sign In</h2>
+                            <h2 class="text-2xl md:text-3xl text-center mb-6">Sign In</h2>
 
-                            <div class="input-box relative border-b border-white mb-8">
-                                <input name="email" required class="w-full bg-transparent outline-none py-2" />
+                            @if ($errors->any())
+                                <div class="mb-6 rounded-xl bg-red-950/40 border border-red-500/30
+                                            px-4 py-3 text-sm text-red-200">
+                                    <div class="font-medium mb-1">Authentication failed</div>
+                                    <ul class="list-disc list-inside space-y-1 text-xs">
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            @endif
+
+                            <div class="input-box relative border-b border-white mb-8 {{ $errors->has('email') ? 'border-red-400' : '' }}">
+                                <input name="email" value="{{ old('email') }}" required class="w-full bg-transparent outline-none py-2" />
                                 <label class="absolute left-0 top-1/2 -translate-y-1/2 transition">Email</label>
                             </div>
 
-                            <div class="input-box relative border-b border-white mb-6">
+                            <div class="input-box relative border-b border-white mb-6 {{ $errors->has('password') ? 'border-red-400' : '' }}">
                                 <input type="password" name="password" required class="w-full bg-transparent outline-none py-2" />
                                 <label class="absolute left-0 top-1/2 -translate-y-1/2 transition">Password</label>
                             </div>
@@ -92,24 +104,36 @@
                                 flex items-center justify-center">
                         <form method="POST" action="{{ route('register') }}" class="w-full px-8 md:px-12">
                             @csrf
-                            <h2 class="text-2xl md:text-3xl text-center mb-8">Sign Up</h2>
+                            <h2 class="text-2xl md:text-3xl text-center mb-6">Sign Up</h2>
 
-                            <div class="input-box relative border-b border-white mb-6">
-                                <input name="name" required class="w-full bg-transparent outline-none py-2" />
+                            @if ($errors->any())
+                                <div class="mb-6 rounded-xl bg-red-950/40 border border-red-500/30
+                                            px-4 py-3 text-sm text-red-200">
+                                    <div class="font-medium mb-1">Registration failed</div>
+                                    <ul class="list-disc list-inside space-y-1 text-xs">
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            @endif
+
+                            <div class="input-box relative border-b border-white mb-6 {{ $errors->has('name') ? 'border-red-400' : '' }}">
+                                <input name="name" value="{{ old('name') }}" required class="w-full bg-transparent outline-none py-2" />
                                 <label class="absolute left-0 top-1/2 -translate-y-1/2 transition">Name</label>
                             </div>
 
-                            <div class="input-box relative border-b border-white mb-6">
-                                <input name="email" required class="w-full bg-transparent outline-none py-2" />
+                            <div class="input-box relative border-b border-white mb-6 {{ $errors->has('email') ? 'border-red-400' : '' }}">
+                                <input name="email" value="{{ old('email') }}" required class="w-full bg-transparent outline-none py-2" />
                                 <label class="absolute left-0 top-1/2 -translate-y-1/2 transition">Email</label>
                             </div>
 
-                            <div class="input-box relative border-b border-white mb-6">
+                            <div class="input-box relative border-b border-white mb-6 {{ $errors->has('password') ? 'border-red-400' : '' }}">
                                 <input type="password" name="password" required class="w-full bg-transparent outline-none py-2" />
                                 <label class="absolute left-0 top-1/2 -translate-y-1/2 transition">Password</label>
                             </div>
 
-                            <div class="input-box relative border-b border-white mb-6">
+                            <div class="input-box relative border-b border-white mb-6 {{ $errors->has('password_confirmation') ? 'border-red-400' : '' }}">
                                 <input type="password" name="password_confirmation" required class="w-full bg-transparent outline-none py-2" />
                                 <label class="absolute left-0 top-1/2 -translate-y-1/2 transition">Confirm</label>
                             </div>
@@ -151,39 +175,26 @@
             font-size: 12px;
         }
 
-        /* Mobile: swap, not slide */
         @media (max-width: 1023px) {
-            .logreg-box .from-box.register {
-                display: none;
-            }
-
-            .logreg-box.active .from-box.login {
-                display: none;
-            }
-
-            .logreg-box.active .from-box.register {
-                display: flex;
-            }
+            .logreg-box .from-box.register { display: none; }
+            .logreg-box.active .from-box.login { display: none; }
+            .logreg-box.active .from-box.register { display: flex; }
         }
 
-        /* Desktop: slide animation */
         @media (min-width: 1024px) {
             .logreg-box .from-box.login {
                 transform: translateX(0);
                 transition: transform .6s ease;
                 transition-delay: .6s;
             }
-
             .logreg-box.active .from-box.login {
                 transform: translateX(110%);
                 transition-delay: 0s;
             }
-
             .logreg-box .from-box.register {
                 transform: translateX(110%);
                 transition: transform .6s ease;
             }
-
             .logreg-box.active .from-box.register {
                 transform: translateX(0);
                 transition-delay: .6s;

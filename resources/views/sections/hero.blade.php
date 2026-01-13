@@ -1,10 +1,32 @@
 <section id="hero" class="relative overflow-hidden">
-  {{-- Background --}}
+
+  {{-- Background existing --}}
   <div class="absolute top-0 left-0 z-10">
     <img src="{{ asset('assets/images/bg.png') }}" alt="">
   </div>
 
-  <div class="hero-layout">
+  {{-- NEW: Hero Background Image Right + Fade --}}
+<div class="absolute top-0 right-0 w-1/2 h-full z-0 pointer-events-none hidden md:block">
+  <div class="relative w-full h-full">
+
+    {{-- Image with opacity --}}
+    <img
+      src="{{ asset('assets/images/herobg.jpg') }}"
+      alt="Hero Background"
+      class="absolute inset-0 w-full h-full object-cover object-center opacity-45"
+    >
+
+    {{-- Fade to left --}}
+    <div class="absolute inset-0 bg-gradient-to-l from-transparent via-black/40 to-black"></div>
+
+    {{-- Fade to bottom --}}
+    <div class="absolute bottom-0 left-0 w-full h-1/2 bg-gradient-to-t from-black via-black/80 to-transparent"></div>
+
+  </div>
+</div>
+
+
+  <div class="hero-layout relative z-10">
     {{-- LEFT: Hero Content --}}
     <header class="flex flex-col justify-center md:w-full w-screen md:px-20 px-5">
       <div class="flex flex-col gap-7">
@@ -66,4 +88,5 @@
 
   {{-- Animated Counter --}}
   {{-- @include('components.animated-counter') --}}
+
 </section>

@@ -6,15 +6,18 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ContactController;
 
 
+Route::post('/contact', [ContactController::class, 'store'])
+    ->name('contact.store');
+
 // landigng page
-Route::get('/', [HomeController::class, 'index'])->name('home'); 
+Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::post('/contact', [ContactController::class, 'store']) ->name('contact.store');
 
 // GLOBAL SHOWCASE (tetap public)
 Route::get('/dashboard', [ProjectController::class, 'index'])
     ->name('dashboard');
 
-Route::get('/dashboard/{slug}', [ProjectController::class, 'show']) 
+Route::get('/dashboard/{slug}', [ProjectController::class, 'show'])
     ->name('projects.show');
 
 // auth page

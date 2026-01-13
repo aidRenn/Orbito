@@ -6,7 +6,7 @@
             <div class="flex items-center gap-6">
                 <a href="{{ route('dashboard') }}"
                    class="text-sm font-semibold tracking-wide text-white hover:text-indigo-400 transition">
-                    PROJECT<span class="text-indigo-400">SHOW</span>
+                    BUILD<span class="text-indigo-400">RA</span>
                 </a>
 
                 <div class="hidden sm:flex items-center gap-4 text-sm">

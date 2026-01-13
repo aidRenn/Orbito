@@ -194,7 +194,8 @@
           </div>
         @endif
 
-        <x-project.gallery :photos="$project->photos" />
+        <x-project.gallery :photos="$project->photos" class="lg:col-span-2" />
+
 
       </div>
       {{-- END GRID --}}

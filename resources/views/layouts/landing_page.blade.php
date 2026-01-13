@@ -13,5 +13,16 @@
 
 @include('partials.footer')
 
+<script>
+  function closeContactModal() {
+    const modal = document.getElementById('contact-modal');
+    if (modal) {
+      modal.classList.add('opacity-0');
+      setTimeout(() => modal.remove(), 200);
+    }
+  }
+</script>
+
+
 </body>
 </html>

@@ -37,6 +37,31 @@
             </div>
         </div>
 
+        <div class="flex items-center justify-between bg-white/5 backdrop-blur border border-white/10 rounded-2xl p-4">
+    <div class="text-sm text-gray-400">
+        You are logged in as <span class="text-gray-200">{{ auth()->user()->email }}</span>
+    </div>
+
+    <form method="POST" action="{{ route('logout') }}">
+        @csrf
+        <button
+            type="submit"
+            class="group inline-flex items-center gap-2 h-10 px-4 rounded-xl
+                   bg-red-950/40 border border-red-500/30
+                   text-red-300 hover:text-red-200
+                   hover:bg-red-900/50 hover:border-red-400/50
+                   transition"
+        >
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 opacity-80 group-hover:opacity-100" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h6a2 2 0 012 2v1" />
+            </svg>
+            Sign Out
+        </button>
+    </form>
+</div>
+
+
         <div class="bg-red-950/40 backdrop-blur border border-red-500/20 rounded-2xl p-6">
             @include('profile.partials.delete-user-form', ['user' => auth()->user()])
         </div>
