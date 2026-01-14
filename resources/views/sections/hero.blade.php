@@ -1,15 +1,16 @@
 <section id="hero" class="relative overflow-hidden">
 
   {{-- Background existing --}}
-  <div class="absolute top-0 left-0 z-10">
-    <img src="{{ asset('assets/images/bg.png') }}" alt="">
-  </div>
+<div class="absolute top-0 left-0 z-10 pointer-events-none">
+  <img src="{{ asset('assets/images/bg.png') }}" alt="">
+</div>
+
 
   {{-- NEW: Hero Background Image Right + Fade --}}
 <div class="absolute top-0 right-0 w-1/2 h-full z-0 pointer-events-none hidden md:block">
   <div class="relative w-full h-full">
 
-    {{-- Image with opacity --}}
+    {{-- Image --}}
     <img
       src="{{ asset('assets/images/herobg.jpg') }}"
       alt="Hero Background"
@@ -81,9 +82,9 @@
     </header>
 
     {{-- RIGHT: 3D PLACEHOLDER --}}
-    <figure>
-      <div class="hero-3d-layout"></div>
-    </figure>
+    <figure class="pointer-events-none">
+  <div class="hero-3d-layout"></div>
+</figure>
   </div>
 
   {{-- Animated Counter --}}
